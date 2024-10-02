@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header className="rps-header">
+        <div className="rps-stats">
+          <ul className="rps-stats__list">
+            <li className="rps-stats__item rps-stats__item--balance">
+              BALANCE: <span className="rps-stats__item--value">XXX.XX</span>
+            </li>
+            <li className="rps-stats__item rps-stats__item--bet">
+              BET:
+              <span className="rps-stats__item--value">XXX.XX</span>
+            </li>
+            <li className="rps-stats__item rps-stats__item--win">
+              WIN:
+              <span className="rps-stats__item--value">XXX.XX</span>
+            </li>
+          </ul>
+        </div>
+      </header>
+      <main className="rps-main">
+        <section className="rps-result">
+          <h1 className="rps-result__title">PAPER WON</h1>
+          <p className="rps-result__win-amount">YOU WIN XXX.XX</p>
+        </section>
+        <section className="rps-game">
+          <p className="rps-game__instruction">PICK YOUR POSITIONS</p>
+          <div className="rps-choices">
+            <div className="rps-choice rps-choice--rock">
+              <div className="rps-choice__value">500</div>
+              <div className="rps-choice__name">ROCK</div>
+            </div>
+            <div className="rps-choice rps-choice--paper">
+              <div className="rps-choice__value">500</div>
+              <div className="rps-choice__name">PAPER</div>
+            </div>
+            <div className="rps-choice rps-choice--scissors">
+              <div className="rps-choice__value">500</div>
+              <div className="rps-choice__name">SCISSORS</div>
+            </div>
+          </div>
+        </section>
+        <button className="rps-play-button">PLAY</button>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
