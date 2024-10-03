@@ -1,4 +1,6 @@
 import { useMemo, useState } from "react";
+import { useModal } from "./shared/Hooks/Modal";
+import { Modal } from "./shared/UI/Modal";
 
 type Choice = "rock" | "paper" | "scissors";
 type Bet = { [key in Choice]?: number };
@@ -9,18 +11,22 @@ const ONE_POSITION_WIN_RATE = 14;
 const TWO_POSITION_WIN_RATE = 3;
 
 const RockPaperScissorsGame = () => {
+  const { isOpen, openModal, closeModal } = useModal();
   const choices: Choice[] = ["rock", "paper", "scissors"];
   const [balance, setBalance] = useState(INITIAL_BALANCE);
   const [bets, setBets] = useState<Bet>({});
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
 
   const placeBet = (choice: Choice) => {
     if (Object.keys(bets).length >= 2 && !bets[choice]) {
-      alert("You can only bet on two positions at a time");
+      setModalMessage("You can only bet on two positions at a time");
+      openModal();
       return;
     }
 
     if (balance < BET_AMOUNT) {
-      alert("You don't have enough money to bet");
+      setModalMessage("You don't have enough money to bet");
+      openModal();
       return;
     }
 
@@ -81,6 +87,10 @@ const RockPaperScissorsGame = () => {
         </section>
         <button className="rps-play-button">PLAY</button>
       </main>
+      <Modal isOpen={isOpen}>
+        <p>{modalMessage}</p>
+        <button onClick={closeModal}>Close</button>
+      </Modal>
     </>
   );
 };
