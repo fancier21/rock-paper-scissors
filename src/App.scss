@@ -1,0 +1,212 @@
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    user-select: none;
+}
+
+.rps-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.rps-stats {
+    padding: 2px;
+
+    &__list {
+        display: flex;
+        justify-content: center;
+        gap: 80px;
+    }
+
+    &__item {
+        /* flex: 0 1 110px; */
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        text-transform: uppercase;
+
+        &--value {
+            color: red;
+        }
+    }
+}
+
+.rps-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    color: #fff;
+    background: linear-gradient(to bottom, #333, #111);
+}
+
+.rps-result {
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.rps-game {
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 70px;
+
+    &__instruction {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+}
+
+.rps-choices {
+    width: inherit;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.rps-choice {
+    flex: 0 1 170px;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    cursor: pointer;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    &:active {
+        animation: pulse 0.3s ease-in-out;
+    }
+
+    &__value {
+        width: 50px;
+        height: 50px;
+        font-weight: 800;
+        color: #000;
+        background: #fff;
+        border: 4px solid #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    &__name {
+        font-size: 24px;
+        font-weight: 500;
+        text-transform: uppercase;
+        color: #fff;
+        margin-top: auto;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.rps-play-button {
+    margin-top: 75px;
+    padding: 16px 50px;
+    border: 2px solid #d2d2d2;
+    border-radius: 50px;
+    color: #fff;
+    background-color: #000;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: #fff;
+        color: #000;
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    &:active {
+        animation: pulse 0.3s ease-in-out;
+    }
+}
+
+.rps-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    &__content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 80%;
+        width: 300px;
+
+        p.rps-modal__message {
+            color: #333;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            user-select: none;
+        }
+
+        button.rps-modal__close-button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+
+            &:hover {
+                background-color: #333;
+                transform: scale(1.05);
+            }
+
+            &:active {
+                animation: pulse 0.3s ease-in-out;
+            }
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { useModal } from "./shared/Hooks/Modal";
-import { Modal } from "./shared/UI/Modal";
+import { useModal } from "./shared/hooks";
+import { Modal, Card, Button } from "./shared/ui";
+import { getRandomElementFromArray } from "./shared/utils/getRandomElementFromArray";
 
 type Choice = "rock" | "paper" | "scissors";
 type Bet = { [key in Choice]?: number };
@@ -38,6 +39,11 @@ const RockPaperScissorsGame = () => {
     setBalance((prevBalance) => prevBalance - BET_AMOUNT);
   };
 
+  const playGame = () => {
+    const computerChoice = getRandomElementFromArray(choices);
+    const playerChoices = Object.keys(bets) as Choice[];
+  };
+
   const totalBet = useMemo(() => {
     return Object.values(bets).reduce((acc, bet) => acc + (bet || 0), 0);
   }, [bets]);
@@ -71,7 +77,7 @@ const RockPaperScissorsGame = () => {
           <div className="rps-choices">
             {choices.map((choice) => {
               return (
-                <div
+                <Card
                   className="rps-choice"
                   key={choice}
                   onClick={() => placeBet(choice)}
@@ -80,16 +86,25 @@ const RockPaperScissorsGame = () => {
                     <div className="rps-choice__value">{bets[choice]}</div>
                   )}
                   <div className="rps-choice__name">{choice}</div>
-                </div>
+                </Card>
               );
             })}
           </div>
         </section>
-        <button className="rps-play-button">PLAY</button>
+        <Button className="rps-play-button" onClick={playGame}>
+          PLAY
+        </Button>
       </main>
-      <Modal isOpen={isOpen}>
-        <p>{modalMessage}</p>
-        <button onClick={closeModal}>Close</button>
+      <Modal
+        isOpen={isOpen}
+        onClose={closeModal}
+        className="rps-modal"
+        contentClassName="rps-modal__content"
+      >
+        <p className="rps-modal__message">{modalMessage}</p>
+        <Button className="rps-modal__close-button" onClick={closeModal}>
+          Close
+        </Button>
       </Modal>
     </>
   );

@@ -1,6 +1,6 @@
 import RockPaperScissorsGame from "./Game";
 
-import "./App.css";
+import "./App.scss";
 
 function App() {
   return <RockPaperScissorsGame />;
