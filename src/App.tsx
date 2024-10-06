@@ -1,4 +1,4 @@
-import RockPaperScissorsGame from "./Game";
+import RockPaperScissorsGame from "./game/Game";
 
 import "./App.scss";
 
