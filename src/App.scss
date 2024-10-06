@@ -48,20 +48,29 @@
 }
 
 .rps-result {
-    font-size: 30px;
     text-align: center;
     text-transform: uppercase;
 
     &__title {
         font-size: 40px;
         font-weight: 800;
-        /* margin-bottom: 20px; */
     }
 
     &__versus {
         font-size: 30px;
         font-weight: 800;
         color: red;
+    }
+
+    &__or {
+        font-size: 30px;
+        font-weight: 800;
+        color: gray;
+    }
+
+    &__win-amount {
+        font-size: 24px;
+        font-weight: 600;
     }
 }
 

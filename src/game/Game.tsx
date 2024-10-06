@@ -7,13 +7,14 @@ import Result from "./Result";
 
 type Choice = "rock" | "paper" | "scissors";
 type Bet = { [key in Choice]?: number };
-type GameState = "betting" | "pending" | "result";
+type GameState = "betting" | "playing" | "result";
 type Winner = "player" | "computer" | "tie";
 
 const INITIAL_BALANCE = 5000;
 const BET_AMOUNT = 500;
 const ONE_POSITION_WIN_RATE = 14;
 const TWO_POSITION_WIN_RATE = 3;
+const GAME_DELAY = 3000;
 
 const RockPaperScissorsGame = () => {
   const { isOpen, openModal, closeModal } = useModal();
@@ -48,9 +49,7 @@ const RockPaperScissorsGame = () => {
     setBalance((prevBalance) => prevBalance - BET_AMOUNT);
   };
 
-  const playGame = () => {
-    const newComputerChoice = getRandomElementFromArray(choices);
-    setComputerChoice(newComputerChoice);
+  const calculateResult = (newComputerChoice: Choice) => {
     const playerChoices = Object.keys(bets) as Choice[];
 
     const getWinner = (choice1: Choice, choice2: Choice) => {
@@ -93,6 +92,14 @@ const RockPaperScissorsGame = () => {
     setGameState("result");
   };
 
+  const playGame = () => {
+    setGameState("playing");
+    const newComputerChoice = getRandomElementFromArray(choices);
+    setComputerChoice(newComputerChoice);
+
+    setTimeout(() => calculateResult(newComputerChoice), GAME_DELAY);
+  };
+
   const resetGame = () => {
     setBets({});
     setComputerChoice(null);
@@ -115,6 +122,7 @@ const RockPaperScissorsGame = () => {
           computerChoice={computerChoice}
           playerChoice={""}
           winAmount={winAmount}
+          userChoices={Object.keys(bets) as Choice[]}
         />
         <section className="rps-game">
           {gameState === "betting" && (
@@ -139,15 +147,16 @@ const RockPaperScissorsGame = () => {
             })}
           </div>
         </section>
-        {gameState === "betting" ? (
+        {gameState !== "result" && (
           <Button
             className="rps-button"
-            disabled={Object.keys(bets).length === 0}
+            disabled={Object.keys(bets).length === 0 || gameState != "betting"}
             onClick={playGame}
           >
             PLAY
           </Button>
-        ) : (
+        )}
+        {gameState === "result" && (
           <Button className="rps-button" onClick={resetGame}>
             CLEAR
           </Button>
