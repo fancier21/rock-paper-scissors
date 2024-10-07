@@ -14,7 +14,7 @@ const INITIAL_BALANCE = 5000;
 const BET_AMOUNT = 500;
 const ONE_POSITION_WIN_RATE = 14;
 const TWO_POSITION_WIN_RATE = 3;
-const GAME_DELAY = 3000;
+const GAME_DELAY = 2000;
 
 const RockPaperScissorsGame = () => {
   const { isOpen, openModal, closeModal } = useModal();
@@ -24,6 +24,8 @@ const RockPaperScissorsGame = () => {
   const [computerChoice, setComputerChoice] = useState<Choice | null>(null);
   const [gameState, setGameState] = useState<GameState>("betting");
   const [winAmount, setWinAmount] = useState(0);
+  const [winner, setWinner] = useState<Winner | null>(null);
+  const [winningChoice, setWinningChoice] = useState<Choice | null>(null);
   const [modalMessage, setModalMessage] = useState<string | null>(null);
 
   const placeBet = (choice: Choice) => {
@@ -76,19 +78,49 @@ const RockPaperScissorsGame = () => {
       }
     }
 
-    let winnings = 0;
+    let winnings: number = 0;
+    let winAmount: number = 0;
+    let newWinner: Winner | null = null;
+
     if (winningChoice) {
       const winningBet = bets[winningChoice] || 0;
-      winnings =
-        playerChoices.length === 1
-          ? winningBet * ONE_POSITION_WIN_RATE
-          : winningBet * TWO_POSITION_WIN_RATE;
+      if (playerChoices.length === 1) {
+        winnings = winningBet * ONE_POSITION_WIN_RATE;
+        winAmount = winnings;
+      } else {
+        winnings = winningBet * TWO_POSITION_WIN_RATE;
+        winAmount = winnings;
+        const losingChoice = playerChoices.find(
+          (choice) => choice !== winningChoice,
+        );
+        if (losingChoice) {
+          const losingBet = bets[losingChoice] || 0;
+          winnings -= losingBet;
+        }
+      }
+      setWinningChoice(winningChoice);
+      newWinner = "player";
     } else if (playerChoices.includes(newComputerChoice)) {
+      console.log("tie");
       winnings = bets[newComputerChoice] || 0;
+      const losingChoice = playerChoices.find(
+        (choice) => choice !== newComputerChoice,
+      );
+      if (losingChoice) {
+        winnings -= bets[losingChoice] || 0;
+      }
+      setWinningChoice(null);
+      newWinner = "tie";
+    } else {
+      // winnings = -Object.values(bets).reduce((sum, bet) => sum + bet, 0);
+      setWinningChoice(newComputerChoice);
+      newWinner = "computer";
     }
 
-    setWinAmount(winnings);
+    console.log("winnings", winnings);
+    setWinAmount(winAmount);
     setBalance((prevBalance) => prevBalance + winnings);
+    setWinner(newWinner);
     setGameState("result");
   };
 
@@ -101,10 +133,12 @@ const RockPaperScissorsGame = () => {
   };
 
   const resetGame = () => {
+    setWinner(null);
     setBets({});
     setComputerChoice(null);
     setGameState("betting");
     setWinAmount(0);
+    setWinningChoice(null);
   };
 
   const totalBet = useMemo(() => {
@@ -114,15 +148,21 @@ const RockPaperScissorsGame = () => {
   return (
     <>
       <header className="rps-header">
-        <Stats balance={balance} totalBet={totalBet} winAmount={winAmount} />
+        <Stats
+          balance={balance}
+          totalBet={totalBet}
+          winAmount={winAmount}
+          winner={winner}
+        />
       </header>
       <main className="rps-main">
         <Result
           gameState={gameState}
+          playerChoices={Object.keys(bets) as Choice[]}
           computerChoice={computerChoice}
-          playerChoice={""}
+          winningChoice={winningChoice}
+          winner={winner}
           winAmount={winAmount}
-          userChoices={Object.keys(bets) as Choice[]}
         />
         <section className="rps-game">
           {gameState === "betting" && (

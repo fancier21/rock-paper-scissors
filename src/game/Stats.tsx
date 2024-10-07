@@ -4,9 +4,15 @@ interface StatsProps {
   balance: number;
   totalBet: number;
   winAmount: number;
+  winner: string | null;
 }
 
-const Stats: React.FC<StatsProps> = ({ balance, totalBet, winAmount }) => {
+const Stats: React.FC<StatsProps> = ({
+  balance,
+  totalBet,
+  winAmount,
+  winner,
+}) => {
   return (
     <div className="rps-stats">
       <ul className="rps-stats__list">
@@ -19,7 +25,9 @@ const Stats: React.FC<StatsProps> = ({ balance, totalBet, winAmount }) => {
         </li>
         <li className="rps-stats__item rps-stats__item--win">
           WIN:
-          <span className="rps-stats__item--value">{winAmount}</span>
+          <span className="rps-stats__item--value">
+            {winner === "player" ? winAmount : 0}
+          </span>
         </li>
       </ul>
     </div>
