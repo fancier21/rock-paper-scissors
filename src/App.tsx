@@ -1,9 +1,9 @@
-import RockPaperScissorsGame from "./game/Game";
+import Game from "./game/rps-game";
 
 import "./App.scss";
 
 function App() {
-  return <RockPaperScissorsGame />;
+  return <Game />;
 }
 
 export default App;

@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { useModal } from "../shared/hooks";
-import { Modal, Card, Button } from "../shared/ui";
+import { Modal, Button } from "../shared/ui";
 import { getRandomElementFromArray } from "../shared/utils/getRandomElementFromArray";
-import Stats from "./Stats";
-import Result from "./Result";
+import Stats from "./rps-stats";
+import Result from "./rps-result";
+import Choices from "./rps-choices";
 
 type Choice = "rock" | "paper" | "scissors";
 type Bet = { [key in Choice]?: number };
@@ -16,7 +17,7 @@ const ONE_POSITION_WIN_RATE = 14;
 const TWO_POSITION_WIN_RATE = 3;
 const GAME_DELAY = 2000;
 
-const RockPaperScissorsGame = () => {
+const Game = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const choices: Choice[] = ["rock", "paper", "scissors"];
   const [balance, setBalance] = useState(INITIAL_BALANCE);
@@ -101,7 +102,6 @@ const RockPaperScissorsGame = () => {
       setWinningChoice(winningChoice);
       newWinner = "player";
     } else if (playerChoices.includes(newComputerChoice)) {
-      console.log("tie");
       winnings = bets[newComputerChoice] || 0;
       const losingChoice = playerChoices.find(
         (choice) => choice !== newComputerChoice,
@@ -117,7 +117,6 @@ const RockPaperScissorsGame = () => {
       newWinner = "computer";
     }
 
-    console.log("winnings", winnings);
     setWinAmount(winAmount);
     setBalance((prevBalance) => prevBalance + winnings);
     setWinner(newWinner);
@@ -168,25 +167,16 @@ const RockPaperScissorsGame = () => {
           {gameState === "betting" && (
             <p className="rps-game__instruction">PICK YOUR POSITIONS</p>
           )}
-          <div className="rps-choices">
-            {choices.map((choice) => {
-              return (
-                <Card
-                  className={`rps-choice ${gameState === "result" ? "rps-choice--disabled" : ""}`}
-                  key={choice}
-                  onClick={
-                    gameState === "betting" ? () => placeBet(choice) : undefined
-                  }
-                >
-                  {bets[choice] && (
-                    <div className="rps-choice__value">{bets[choice]}</div>
-                  )}
-                  <div className="rps-choice__name">{choice}</div>
-                </Card>
-              );
-            })}
-          </div>
         </section>
+        <Choices
+          choices={choices}
+          bets={bets}
+          computerChoice={computerChoice}
+          winningChoice={winningChoice}
+          gameState={gameState}
+          placeBet={placeBet}
+          winner={winner}
+        />
         {gameState !== "result" && (
           <Button
             className="rps-button"
@@ -210,11 +200,11 @@ const RockPaperScissorsGame = () => {
       >
         <p className="rps-modal__message">{modalMessage}</p>
         <Button className="rps-modal__close-button" onClick={closeModal}>
-          Close
+          Ok
         </Button>
       </Modal>
     </>
   );
 };
 
-export default RockPaperScissorsGame;
+export default Game;
