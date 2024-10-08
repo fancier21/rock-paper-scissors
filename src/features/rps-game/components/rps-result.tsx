@@ -1,5 +1,7 @@
 import React from "react";
 
+import "../styles/result.scss";
+
 interface ResultProps {
   gameState: string;
   computerChoice: string | null;

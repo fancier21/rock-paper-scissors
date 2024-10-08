@@ -1,0 +1,89 @@
+@import "../../../shared/css/common.scss";
+
+.rps-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.rps-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    padding: 0 10px;
+
+    @include extra-small-break {
+        height: 100%;
+        overflow: auto;
+        padding-top: 180px;
+    }
+
+    .rps-game {
+        width: inherit;
+        margin-top: 70px;
+
+        @include small-break {
+            margin-top: 40px;
+        }
+
+        &__instruction {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+    }
+
+    .rps-button {
+        margin-top: 75px;
+        margin-bottom: 5%;
+        padding: 16px 50px;
+        border: 2px solid var(--color-primary);
+        border-radius: 50px;
+        color: var(--color-primary);
+        background-color: #000;
+        font-size: 24px;
+        font-weight: 500;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        @include small-break {
+            margin-top: 45px;
+        }
+
+        &:hover {
+            background-color: #fff;
+            color: #000;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        &:enabled:active {
+            animation: pulse 0.3s ease-in-out;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    }
+}

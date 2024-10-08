@@ -1,0 +1,44 @@
+.rps-result {
+    text-align: center;
+    text-transform: uppercase;
+
+    &__title {
+        font-weight: 800;
+        color: var(--text-secondary);
+    }
+
+    &__outcome {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    &__text {
+        color: var(--text-primary);
+    }
+
+    &__win-amount {
+        color: var(--text-tertiary);
+    }
+}
+
+.rps-playing-info {
+    text-align: center;
+    text-transform: uppercase;
+
+    &__title {
+        font-weight: 800;
+        color: var(--text-tertiary);
+    }
+
+    &__versus {
+        font-size: 30px;
+        font-weight: 800;
+        color: var(--text-primary);
+    }
+
+    &__separator {
+        font-size: 30px;
+        font-weight: 800;
+        color: aqua;
+    }
+}

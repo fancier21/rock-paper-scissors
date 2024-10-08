@@ -86,3 +86,14 @@ ul {
     list-style: none;
     padding: 0;
 }
+
+#app {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    user-select: none;
+    color: #fff;
+    background: var(--bg-primary);
+}

@@ -1,5 +1,7 @@
 import React from "react";
 
+import "../styles/stats.scss";
+
 interface StatsProps {
   balance: number;
   totalBet: number;

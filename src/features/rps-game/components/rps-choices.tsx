@@ -1,8 +1,8 @@
 import React from "react";
-import { Card } from "../shared/ui";
+import { Card } from "../../../shared/ui";
+import type { Choice, Winner } from "../types";
 
-type Choice = "rock" | "paper" | "scissors";
-type Winner = "player" | "computer" | "tie";
+import "../styles/choices.scss";
 
 interface ChoicesProps {
   choices: Choice[];
@@ -34,7 +34,7 @@ const Choices: React.FC<ChoicesProps> = ({
         return (
           <Card
             className={`rps-choice
-                                ${gameState === "result" ? "rps-choice--disabled" : ""}
+                                ${gameState != "betting" ? "rps-choice--disabled" : ""}
                                 ${isPlayerChoice ? "rps-choice--player" : ""}
                                 ${isComputerChoice ? "rps-choice--computer" : ""}
                                 ${isWinningChoice || isTieChoice ? "rps-choice--winning" : ""}`}

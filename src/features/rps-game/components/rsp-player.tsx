@@ -1,23 +1,23 @@
 import { useMemo, useState } from "react";
-import { useModal } from "../shared/hooks";
-import { Modal, Button } from "../shared/ui";
-import { getRandomElementFromArray } from "../shared/utils/getRandomElementFromArray";
+import { useModal } from "../../../shared/hooks";
+import { Button } from "../../../shared/ui";
+import CustomModal from "./rps-modal";
 import Stats from "./rps-stats";
 import Result from "./rps-result";
 import Choices from "./rps-choices";
+import {
+  INITIAL_BALANCE,
+  BET_AMOUNT,
+  ONE_POSITION_WIN_RATE,
+  TWO_POSITION_WIN_RATE,
+  GAME_DELAY,
+} from "../constants";
+import { getRandomElementFromArray } from "../../../shared/utils/getRandomElementFromArray";
+import type { GameState, Bet, Choice, Winner } from "../types";
 
-type Choice = "rock" | "paper" | "scissors";
-type Bet = { [key in Choice]?: number };
-type GameState = "betting" | "playing" | "result";
-type Winner = "player" | "computer" | "tie";
+import "../styles/player.scss";
 
-const INITIAL_BALANCE = 5000;
-const BET_AMOUNT = 500;
-const ONE_POSITION_WIN_RATE = 14;
-const TWO_POSITION_WIN_RATE = 3;
-const GAME_DELAY = 2000;
-
-const Game = () => {
+const Player = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const choices: Choice[] = ["rock", "paper", "scissors"];
   const [balance, setBalance] = useState(INITIAL_BALANCE);
@@ -192,19 +192,13 @@ const Game = () => {
           </Button>
         )}
       </main>
-      <Modal
+      <CustomModal
         isOpen={isOpen}
         onClose={closeModal}
-        className="rps-modal"
-        contentClassName="rps-modal__content"
-      >
-        <p className="rps-modal__message">{modalMessage}</p>
-        <Button className="rps-modal__close-button" onClick={closeModal}>
-          Ok
-        </Button>
-      </Modal>
+        message={modalMessage}
+      />
     </>
   );
 };
 
-export default Game;
+export default Player;
