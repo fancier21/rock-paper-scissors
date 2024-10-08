@@ -16,15 +16,16 @@ const Stats: React.FC<StatsProps> = ({
   return (
     <div className="rps-stats">
       <ul className="rps-stats__list">
-        <li className="rps-stats__item rps-stats__item--balance">
-          BALANCE: <span className="rps-stats__item--value">{balance}</span>
+        <li className="rps-stats__item">
+          <span className="rps-stats__item--label">BALANCE:</span>
+          <span className="rps-stats__item--value">{balance}</span>
         </li>
-        <li className="rps-stats__item rps-stats__item--bet">
-          BET:
+        <li className="rps-stats__item">
+          <span className="rps-stats__item--label">BET:</span>
           <span className="rps-stats__item--value">{totalBet}</span>
         </li>
-        <li className="rps-stats__item rps-stats__item--win">
-          WIN:
+        <li className="rps-stats__item">
+          <span className="rps-stats__item--label">WIN:</span>
           <span className="rps-stats__item--value">
             {winner === "player" ? winAmount : 0}
           </span>

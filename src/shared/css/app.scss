@@ -1,6 +1,6 @@
 @use "./queries.scss" as *;
 @use "./colors.scss" as *;
-@use "./types.scss" as *;
+@use "./type.scss" as *;
 @import "./theme.scss";
 
 *,
@@ -85,12 +85,4 @@ h6 {
 ul {
     list-style: none;
     padding: 0;
-}
-
-#app {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    user-select: none;
 }
