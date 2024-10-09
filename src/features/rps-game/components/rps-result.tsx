@@ -48,7 +48,7 @@ const Result: React.FC<ResultProps> = ({
               : playerChoices.map((choice, index) => (
                   <React.Fragment key={choice}>
                     {index > 0 && (
-                      <span className="rps-playing-info__separator"> or </span>
+                      <span className="rps-playing-info__separator"> , </span>
                     )}
                     {choice}
                   </React.Fragment>
