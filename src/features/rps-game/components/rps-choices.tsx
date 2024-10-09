@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { Card } from "../../../shared/ui";
 import type { Choice, Winner } from "../types";
 
@@ -23,6 +24,20 @@ const Choices: React.FC<ChoicesProps> = ({
   placeBet,
   winner,
 }) => {
+  const getChoiceClassName = (
+    gameState: string,
+    isPlayerChoice: boolean,
+    isComputerChoice: boolean,
+    isWinningChoice: boolean,
+    isTieChoice: boolean,
+  ): string =>
+    classNames("rps-choice", {
+      "rps-choice--disabled": gameState !== "betting",
+      "rps-choice--player": isPlayerChoice,
+      "rps-choice--computer": isComputerChoice,
+      "rps-choice--winning": isWinningChoice || isTieChoice,
+    });
+
   return (
     <div className="rps-choices">
       {choices.map((choice) => {
@@ -33,11 +48,13 @@ const Choices: React.FC<ChoicesProps> = ({
           winner === "tie" && isPlayerChoice && isComputerChoice;
         return (
           <Card
-            className={`rps-choice
-                                ${gameState != "betting" ? "rps-choice--disabled" : ""}
-                                ${isPlayerChoice ? "rps-choice--player" : ""}
-                                ${isComputerChoice ? "rps-choice--computer" : ""}
-                                ${isWinningChoice || isTieChoice ? "rps-choice--winning" : ""}`}
+            className={getChoiceClassName(
+              gameState,
+              isPlayerChoice,
+              isComputerChoice,
+              isWinningChoice,
+              isTieChoice,
+            )}
             key={choice}
             onClick={
               gameState === "betting" ? () => placeBet(choice) : undefined
