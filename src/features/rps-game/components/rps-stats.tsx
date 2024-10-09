@@ -20,7 +20,9 @@ const Stats: React.FC<StatsProps> = ({
       <ul className="rps-stats__list">
         <li className="rps-stats__item">
           <span className="rps-stats__item--label">BALANCE:</span>
-          <span className="rps-stats__item--value">{balance}</span>
+          <span className="rps-stats__item--value">
+            {balance > 0 ? balance : 0}
+          </span>
         </li>
         <li className="rps-stats__item">
           <span className="rps-stats__item--label">BET:</span>
